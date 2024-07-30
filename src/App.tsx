@@ -9,10 +9,13 @@ const faces = Object.values(import.meta.glob('./assets/face/*.png', { eager: tru
 const hats = Object.values(import.meta.glob('./assets/hat/*.png', { eager: true, as: 'url' }))
 const liquors = Object.values(import.meta.glob('./assets/liquor/*.png', { eager: true, as: 'url' }))
 
-const REPATE_MS = 150
+const INTERVAL_MIN_MS = 100;
+const DEFAULT_INTERVAL_MS = 500;
+const INTERVAL_MAX_MS = 1000;
 
 function App() {
   const [randomAssets, setRandomAssets] = useState<string>();
+  const [intervalMs, setIntervalMs] = useState(DEFAULT_INTERVAL_MS);
 
   const combineImages = (images: string[]) => {
     const canvas = document.createElement('canvas');
@@ -76,7 +79,7 @@ function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       randomImage();
-    }, REPATE_MS);
+    }, intervalMs);
 
     setIntervalValue(interval);
 
@@ -92,11 +95,11 @@ function App() {
     setIsRunning(false);
   };
 
-  const resumeAnimation = () => {
+  const resumeAnimation = (delta: number) => {
     setIsRunning(true);
     const interval = setInterval(() => {
       randomImage();
-    }, REPATE_MS);
+    }, intervalMs + delta);
 
     setIntervalValue(interval);
   };
@@ -105,13 +108,128 @@ function App() {
     if (isRunning) {
       stopAnimation();
     } else {
-      resumeAnimation();
+      resumeAnimation(0);
+    }
+  }
+
+  const speedUpAnimation = () => {
+    if (intervalMs > INTERVAL_MIN_MS) {
+      setIntervalMs(intervalMs - 100);
+      
+      stopAnimation()
+      resumeAnimation(-100)
+    }
+  }
+
+  const speedDownAnimation = () => {
+    if (intervalMs <= INTERVAL_MAX_MS) {
+      setIntervalMs(intervalMs + 100);
+
+      stopAnimation()
+      resumeAnimation(100)
     }
   }
   
   return (
     <div>
-      <div style={{ margin: "10px", display: "flex", justifyContent: "flex-end" }}>
+      <div style={{ margin: "10px" }}>
+        <button
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#000000",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            marginRight: "10px"
+          }}
+          onClick={() => speedUpAnimation()}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polygon points="11 4 1 12 11 20"></polygon>
+            <polygon points="23 4 13 12 23 20"></polygon>
+          </svg>
+        </button>
+        <button
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#000000",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            marginRight: "10px"
+          }}
+          onClick={() => stopOrResumeAnimation()}
+        >
+          {isRunning ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="6" y="4" width="4" height="16"></rect>
+              <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          )}
+        </button>
+        <button
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#000000",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            marginRight: "10px"
+          }}
+          onClick={() => speedDownAnimation()}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polygon points="1 4 11 12 1 20"></polygon>
+            <polygon points="13 4 23 12 13 20"></polygon>
+          </svg>
+        </button>
         <button
           style={{
             padding: "10px 20px",
@@ -147,7 +265,7 @@ function App() {
         <img
           src={randomAssets}
           alt={`SAKEINU`}
-          style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
+          style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)", borderRadius: "5px" }}
         />
       </div>
     </div>
