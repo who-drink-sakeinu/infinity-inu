@@ -131,144 +131,280 @@ function App() {
   }
   
   return (
-    <div>
-      <div style={{ margin: "10px" }}>
-        <button
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#000000",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-            marginRight: "10px"
-          }}
-          onClick={() => speedUpAnimation()}
+    <div
+  style={{
+    backgroundColor: "#0d0d0d",
+    padding: "20px",
+    borderRadius: "15px",
+    boxShadow: "0 0 25px rgba(0, 255, 255, 0.3)",
+    display: "flow",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    boxSizing: "border-box",
+    color: "#00ffcc",
+    fontFamily: "'Press Start 2P', cursive", 
+    textTransform: "uppercase",
+    position:    "relative",
+    overflow: "hidden",
+  }}
+>
+  <div
+    style={{
+      marginBottom: "20px",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%",
+      gap: "20px",
+    }}
+  >
+    <button
+      style={{
+        padding: "15px",
+        backgroundColor: "#222",
+        color: "#00ffcc",
+        border: "2px solid #00ffcc",
+        borderRadius: "50%",
+        cursor: "pointer",
+        margin: "0",
+        transition: "transform 0.3s, box-shadow 0.3s",
+        width: "calc(20% - 20px)",
+        maxWidth: "80px",
+        minWidth: "50px",
+        boxShadow: "0 0 15px rgba(0, 255, 255, 0.3)",
+        animation: "glow 1s infinite alternate",
+      }}
+      onClick={() => speedDownAnimation()}
+      onMouseOver={(e) => {
+        e.currentTarget.style.transform = "scale(1.2)";
+        e.currentTarget.style.boxShadow = "0 0 25px rgba(0, 255, 255, 0.6)";
+      }}
+      onMouseOut={(e) => {
+        e.currentTarget.style.transform = "scale(1)";
+        e.currentTarget.style.boxShadow = "0 0 15px rgba(0, 255, 255, 0.3)";
+      }}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="100%"
+        height="100%"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ stroke: "#00ffcc" }}
+      >
+        <polygon points="11 4 1 12 11 20"></polygon>
+        <polygon points="23 4 13 12 23 20"></polygon>
+      </svg>
+    </button>
+    <button
+      style={{
+        padding: "15px",
+        backgroundColor: "#222",
+        color: isRunning ? "#ff0066" : "#00ffcc",
+        border: `2px solid ${isRunning ? "#ff0066" : "#00ffcc"}`,
+        borderRadius: "50%",
+        cursor: "pointer",
+        margin: "0",
+        transition: "transform 0.3s, box-shadow 0.3s",
+        width: "calc(20% - 20px)",
+        maxWidth: "80px",
+        minWidth: "50px",
+        boxShadow: "0 0 15px rgba(0, 255, 255, 0.3)",
+        animation: "glow 1s infinite alternate",
+      }}
+      onClick={() => stopOrResumeAnimation()}
+      onMouseOver={(e) => {
+        e.currentTarget.style.transform = "scale(1.2)";
+        e.currentTarget.style.boxShadow = "0 0 25px rgba(0, 255, 255, 0.6)";
+      }}
+      onMouseOut={(e) => {
+        e.currentTarget.style.transform = "scale(1)";
+        e.currentTarget.style.boxShadow = "0 0 15px rgba(0, 255, 255, 0.3)";
+      }}
+    >
+      {isRunning ? (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="100%"
+          height="100%"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ stroke: "#ff0066" }}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polygon points="11 4 1 12 11 20"></polygon>
-            <polygon points="23 4 13 12 23 20"></polygon>
-          </svg>
-        </button>
-        <button
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#000000",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-            marginRight: "10px"
-          }}
-          onClick={() => stopOrResumeAnimation()}
+          <rect x="6" y="4" width="4" height="16"></rect>
+          <rect x="14" y="4" width="4" height="16"></rect>
+        </svg>
+      ) : (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="100%"
+          height="100%"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ stroke: "#00ffcc" }}
         >
-          {isRunning ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect x="6" y="4" width="4" height="16"></rect>
-              <rect x="14" y="4" width="4" height="16"></rect>
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-          )}
-        </button>
-        <button
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#000000",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-            marginRight: "10px"
-          }}
-          onClick={() => speedDownAnimation()}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polygon points="1 4 11 12 1 20"></polygon>
-            <polygon points="13 4 23 12 13 20"></polygon>
-          </svg>
-        </button>
-        <button
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#000000",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer"
-          }}
-          onClick={() => downloadImage(randomAssets)}
-        >
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{ marginRight: "5px" }}
-            >
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-          </div>
-        </button>
-      </div>
-      <div onClick={() => stopOrResumeAnimation()}>
-        <img
-          src={randomAssets}
-          alt={`SAKEINU`}
-          style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)", borderRadius: "5px" }}
-        />
-      </div>
-    </div>
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+      )}
+    </button>
+    <button
+      style={{
+        padding: "15px",
+        backgroundColor: "#222",
+        color: "#00ffcc",
+        border: "2px solid #00ffcc",
+        borderRadius: "50%",
+        cursor: "pointer",
+        margin: "0",
+        transition: "transform 0.3s, box-shadow 0.3s",
+        width: "calc(20% - 20px)",
+        maxWidth: "80px",
+        minWidth: "50px",
+        boxShadow: "0 0 15px rgba(0, 255, 255, 0.3)",
+        animation: "glow 1s infinite alternate",
+      }}
+      onClick={() => speedUpAnimation()}
+      onMouseOver={(e) => {
+        e.currentTarget.style.transform = "scale(1.2)";
+        e.currentTarget.style.boxShadow = "0 0 25px rgba(0, 255, 255, 0.6)";
+      }}
+      onMouseOut={(e) => {
+        e.currentTarget.style.transform = "scale(1)";
+        e.currentTarget.style.boxShadow = "0 0 15px rgba(0, 255, 255, 0.3)";
+      }}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="100%"
+        height="100%"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ stroke: "#00ffcc" }}
+      >
+        <polygon points="1 4 11 12 1 20"></polygon>
+        <polygon points="13 4 23 12 13 20"></polygon>
+      </svg>
+    </button>
+    <button
+      style={{
+        padding: "15px",
+        backgroundColor: "#222",
+        color: "#00ffcc",
+        border: "2px solid #00ffcc",
+        borderRadius: "50%",
+        cursor: "pointer",
+        margin: "0",
+        transition: "transform 0.3s, box-shadow 0.3s",
+        width: "calc(20% - 20px)",
+        maxWidth: "80px",
+        minWidth: "50px",
+        boxShadow: "0 0 15px rgba(0, 255, 255, 0.3)",
+        animation: "glow 1s infinite alternate",
+      }}
+      onClick={() => downloadImage(randomAssets)}
+      onMouseOver={(e) => {
+        e.currentTarget.style.transform = "scale(1.2)";
+        e.currentTarget.style.boxShadow = "0 0 25px rgba(0, 255, 255, 0.6)";
+      }}
+      onMouseOut={(e) => {
+        e.currentTarget.style.transform = "scale(1)";
+        e.currentTarget.style.boxShadow = "0 0 15px rgba(0, 255, 255, 0.3)";
+      }}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="100%"
+        height="100%"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ stroke: "#00ffcc" }}
+      >
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg></button></div>
+      <div
+    style={{
+      width: "100%",
+      height: "100%",
+      position: "relative",
+      marginTop: "20px",
+    }}
+  >
+    <img
+      src={randomAssets}
+      alt={`SAKEINU`}
+      style={{
+        width: "100%",
+        height: "auto",
+        maxHeight: "calc(100vh - 200px)",
+        objectFit: "contain",
+        boxShadow: "0px 0px 25px rgba(255, 255, 0, 0.7)",
+        borderRadius: "15px",
+        animation: "energy 1s infinite alternate",
+      }}
+    />
+{/* energy animation */}
+<div
+  style={{
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "100%",
+    height: "100%",
+    background: "radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%)",
+    borderRadius: "50%",
+    animation: "energyWave 1.5s infinite ease-in-out",
+    zIndex: "1",
+  }}
+/></div>
+<style>
+    {`
+      @keyframes glow {
+        0% { box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); }
+        100% { box-shadow: 0 0 25px rgba(0, 255, 255, 0.7); }
+      }
+
+      @keyframes energy {
+        0% { box-shadow: 0 0 15px rgba(255, 255, 0, 0.7); }
+        100% { box-shadow: 0 0 25px rgba(255, 255, 0, 1); }
+      }
+
+      @keyframes energyWave {
+        0% {
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 0.8;
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(1.2);
+          opacity: 0;
+        }
+      }
+    `}
+  </style>
+</div>
   );
 }
 
